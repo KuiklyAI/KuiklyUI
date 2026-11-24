@@ -173,5 +173,7 @@ fun MarginPaddingExample() {
 - **Modifier 顺序很重要**：Modifier 的顺序会直接影响最终效果。例如：
   - `padding().background()` - padding 在外，background 在内（相当于外边距）
   - `background().padding()` - background 在外，padding 在内（相当于内边距）
+  - `background().padding().clickable()` - clickable 在 padding 内侧，**只有内容区可点击**，padding 空白区点不到；想让整块（含 padding）可点击，应写成 `background().clickable().padding()`
+- **`padding` 不会对齐内容**：`padding` 只负责外扩尺寸并平移原点，不负责在 padding 区域内对齐子内容（这与 CSS `padding + text-align:center` 可以居中不同）。若要让 `Text` 在 padding 区域内居中，用 `Box(contentAlignment = Alignment.Center)` 包裹；`Text` 的 `textAlign` 只作用于"行内文字在每行宽度内"的对齐，在 wrap-content 宽度下不会产生居中效果。
 - **性能优化**：尽量复用常用的 Modifier 链，避免在高频重组中创建新的 Modifier 对象。
 - **链式组合**：Modifier 支持链式组合，多个 Modifier 可以通过 `.` 操作符连接，按顺序应用。
